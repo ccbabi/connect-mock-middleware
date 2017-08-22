@@ -1,8 +1,8 @@
 const fs = require('fs')
 const url = require('url')
 const path = require('path')
-const Mock = require('mockjs')
 const vm = require('vm')
+const Mock = require('mockjs')
 const pathToRegexp = require('path-to-regexp')
 
 module.exports = function (dirPath, filter) {
@@ -23,7 +23,7 @@ module.exports = function (dirPath, filter) {
     let isMatch
 
     if (isFnFilter) {
-      isMatch = !!filter.call(null, req.url)
+      isMatch = !!filter(req.url)
     } else {
       isMatch = reVerify.test(req.url)
     }
@@ -42,7 +42,6 @@ module.exports = function (dirPath, filter) {
         const fileRe = pathToRegexp(fileUrl, keys)
 
         if (fileRe.test(pathname.slice(1))) {
-
           fs.readFile(path.join(mockDir, file), 'utf8', (err, data) => {
             if (err) return next(err)
             const sandbox = {

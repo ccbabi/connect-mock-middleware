@@ -10,5 +10,4 @@ app.use(connectMockMiddle(path.join(__dirname, 'mock'), function (url) {
   return /^\/api/.test(url)
 }))
 
-
 app.listen(3000)
