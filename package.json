@@ -1,0 +1,20 @@
+{
+  "name": "connect-mock-middleware",
+  "version": "0.0.1",
+  "description": "A simple mock tool",
+  "main": "index.js",
+  "repository": "git@github.com:ccbabi/connect-mock-middleware.git",
+  "author": "ccbabi <kxxw28@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "test": "nodemon example/"
+  },
+  "dependencies": {
+    "mockjs": "^1.0.1-beta3",
+    "path-to-regexp": "^1.7.0"
+  },
+  "devDependencies": {
+    "express": "^4.15.4",
+    "nodemon": "^1.11.0"
+  }
+}
