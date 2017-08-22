@@ -63,7 +63,7 @@ module.exports = function (dirPath, filter) {
               params[key.name] = values[i + 1]
             })
 
-            const mockData = sandbox.module.exports({params, query: req.query, body: req.body})
+            const mockData = sandbox.module.exports({params, query: req.query, body: req.body || {}})
             const json = Mock.mock(mockData)
 
             res.json(json)
