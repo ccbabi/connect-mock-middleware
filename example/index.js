@@ -4,10 +4,11 @@ const connectMockMiddle = require('../')
 
 const app = express()
 
-// app.use(connectMockMiddle(path.join(__dirname, 'mock'), '/api'))
-// app.use(connectMockMiddle(path.join(__dirname, 'mock'), ['/api', '/bbb']))
-app.use(connectMockMiddle(path.join(__dirname, 'mock'), function (url) {
-  return /^\/api/.test(url)
+app.set('jsonp callback name', 'cb')
+
+app.use(connectMockMiddle(path.join(__dirname, 'mock'), {
+  prefix: '/api',
+  callback: 'cb'
 }))
 
 app.listen(3000)

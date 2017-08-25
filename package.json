@@ -1,6 +1,6 @@
 {
   "name": "connect-mock-middleware",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "A simple mock tool",
   "main": "index.js",
   "repository": "git@github.com:ccbabi/connect-mock-middleware.git",

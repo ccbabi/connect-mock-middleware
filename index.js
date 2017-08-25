@@ -5,15 +5,15 @@ const vm = require('vm')
 const Mock = require('mockjs')
 const pathToRegexp = require('path-to-regexp')
 
-module.exports = function (dirPath, filter) {
+module.exports = function (dirPath, { prefix = '/*', callback = 'callback' } = {}) {
   let rules, reVerify
   let isFnFilter = false
-  const type = typeof filter
+  const type = typeof prefix
 
   if (type === 'function') {
     isFnFilter = true
-  } else if (type === 'string' || Array.isArray(filter)) {
-    rules = [].concat(filter).join('|')
+  } else if (type === 'string' || Array.isArray(prefix)) {
+    rules = [].concat(prefix).join('|')
     reVerify = new RegExp(`^(?:${rules})`)
   } else {
     throw TypeError('Invalid parameter')
@@ -23,7 +23,7 @@ module.exports = function (dirPath, filter) {
     let isMatch
 
     if (isFnFilter) {
-      isMatch = !!filter(req.url)
+      isMatch = !!prefix(req.url)
     } else {
       isMatch = reVerify.test(req.url)
     }
@@ -62,10 +62,12 @@ module.exports = function (dirPath, filter) {
               params[key.name] = values[i + 1]
             })
 
-            const mockData = sandbox.module.exports({params, query: req.query, body: req.body || {}})
+            const query = req.query
+            const mockData = sandbox.module.exports({params, query, body: req.body || {}})
             const json = Mock.mock(mockData)
 
-            res.json(json)
+            if (query[callback]) res.jsonp(json)
+            else res.json(json)
           })
           return true
         }
